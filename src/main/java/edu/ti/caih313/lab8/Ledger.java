@@ -1,27 +1,20 @@
 package edu.ti.caih313.lab8;
 
+import java.util.ArrayList;
+
 public class Ledger {
 
-        private double[] sale;
+        private ArrayList<Double> salesList = new ArrayList<Double>();
         private int salesMade;
         private int maxSales;
+        double total = 0;
 
 
-        public Ledger(int max){
-            this.maxSales = max;
-            sale = new double[this.maxSales];
-            this.salesMade =0;
-        }
 
-
-        public void addSale(double d){
-            if(salesMade< maxSales){
-                sale[salesMade] = d;
-                salesMade++;
-                System.out.println("Sale added in ledger with value = "+d);
-            }else{
-                System.out.println("Max sales reached for the ledger!");
-            }
+        public void addSale(double d) {
+            salesMade ++;
+            total += d;
+            salesList.add(d);
         }
 
 
@@ -31,10 +24,7 @@ public class Ledger {
 
 
         public double getTotalSales(){
-            double total = 0;
-            for(int i = 0 ; i < salesMade; i++){
-                total = total + sale[i];
-            }
+
             return total;
         }
 
@@ -51,14 +41,46 @@ public class Ledger {
 
         public int getCountAbove(double v){
             int count = 0;
-            for(int i = 0;i<salesMade;i++){
-                if(sale[i]>v){
+            for(int i = 0;i<salesList.size();i++){
+                if(salesList.get(i)>v){
                     count++;
                 }
             }
 
             return count;
         }
+
+    public static void main(String[] args){
+
+        Ledger ledger = new Ledger();
+
+
+        double salesAmount[] = {59,45,67.5,39.45,44.47,61.54,73.29};
+
+
+        for(double d: salesAmount){
+            ledger.addSale(d);
+        }
+
+
+        System.out.println("Total number of sales = "+ ledger.getNumberOFSales());
+
+
+        System.out.println("Total sales amount = "+ ledger.getTotalSales());
+
+
+        System.out.println("Average sale amount = "+ ledger.getAverageSale());
+
+
+        double checkSaleAmount = 50;
+
+
+        System.out.println("Number of sales exceeded "+checkSaleAmount
+                + " in value = "+ledger.getCountAbove(checkSaleAmount));
+
     }
+
+}
+
 
 
